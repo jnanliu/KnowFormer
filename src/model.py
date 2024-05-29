@@ -50,17 +50,11 @@ class KnowformerQKLayer(nn.Module):
         
         edge_index = graph.edge_index if graph_mask is None else graph.edge_index[graph_mask]
         
-        # define adjacency sparse matrix |V| x |V| x |R|
-        # note that we transpose head entity and tail entity because of the special settings of torchdrug
-        # adjacency = sparse_coo_tensor(edge_index[:, [2, 0, 1]].transpose(0, 1), 
-        #                               torch.ones_like(edge_index[:, 0]).float(), 
-        #                               size=[V, V, R])
         # the rspmm cuda kernel from torchdrug 
         # https://torchdrug.ai/docs/api/layers.html#torchdrug.layers.functional.generalized_rspmm
         # reduce memory complexity from O(|E|d) to O(|V|d)
         output = generalized_rspmm(edge_index[:, [0, 2]].transpose(0, 1), edge_index[:, 1], torch.ones_like(edge_index[:, 0]).float(),
                                    relation=split(z.float()), input=split(x.float()))
-            #sparse=adjacency, relation=split(z.float()), input=split(x.float()))
         output = merge(output)
         
         x_shortcut = x
@@ -101,58 +95,15 @@ class KnowformerVLayer(nn.Module):
         
         edge_index = graph.edge_index if graph_mask is None else graph.edge_index[graph_mask]
         
-        # define adjacency sparse matrix |V| x |V| x |R|
-        # note that we transpose head entity and tail entity because of the special settings of torchdrug
-        # adjacency = sparse_coo_tensor(edge_index[:, [2, 0, 1]].transpose(0, 1), 
-        #                               torch.ones_like(edge_index[:, 0]).float(), 
-        #                               size=[V, V, R])
-        
-        
-        
         # the rspmm cuda kernel from torchdrug 
         # https://torchdrug.ai/docs/api/layers.html#torchdrug.layers.functional.generalized_rspmm
         # reduce memory complexity from O(|E|d) to O(|V|d)
         output = generalized_rspmm(edge_index[:, [0, 2]].transpose(0, 1), edge_index[:, 1], torch.ones_like(edge_index[:, 0]).float(),
                                    relation=split(z.float()), input=split(x.float()))
-            #sparse=adjacency, relation=split(z.float()), input=split(x.float()))
         output = merge(output)
-        # output = self.fc_pna(output)
-        
-        # sum = generalized_rspmm(edge_index[:, [0, 2]].transpose(0, 1), edge_index[:, 1], torch.ones_like(edge_index[:, 0]).float(),
-        #                            relation=split(z.float()), input=split(x.float()), sum='add')
-        # sq_sum = generalized_rspmm(edge_index[:, [0, 2]].transpose(0, 1), edge_index[:, 1], torch.ones_like(edge_index[:, 0]).float(),
-        #                            relation=split(z.float()**2), input=split(x.float()**2), sum='add')
-        # max = generalized_rspmm(edge_index[:, [0, 2]].transpose(0, 1), edge_index[:, 1], torch.ones_like(edge_index[:, 0]).float(),
-        #                            relation=split(z.float()), input=split(x.float()), sum='max')
-        # min = generalized_rspmm(edge_index[:, [0, 2]].transpose(0, 1), edge_index[:, 1], torch.ones_like(edge_index[:, 0]).float(),
-        #                            relation=split(z.float()), input=split(x.float()), sum='min')
-        # sum, sq_sum, max, min = map(merge, [sum, sq_sum, max, min])
-        # degree_out = degree(edge_index[:, 0], num_nodes=graph.num_nodes)
-        # degree_out = degree_out.unsqueeze(0).repeat(batch_size, 1) + 1
-        # scale = degree_out.log()
-        # scale = scale / scale.mean().clamp(min=1e-2)
-        # scales = torch.stack([torch.ones_like(scale), scale, 1 / scale.clamp(min=1e-2)], dim=-1)
-        # mean = (sum + x) / degree_out.unsqueeze(-1)
-        # sq_mean = (sq_sum + x**2) / degree_out.unsqueeze(-1)
-        # max = torch.max(max, x)
-        # min = torch.min(min, x)
-        # std = (sq_mean - mean**2).clamp(min=1e-5).sqrt()
-        # features = torch.cat([mean.unsqueeze(-1), max.unsqueeze(-1), min.unsqueeze(-1), std.unsqueeze(-1),], dim=-1)
-        # features = features.flatten(-2)
-        # output = (features.unsqueeze(-1) * scales.unsqueeze(-2)).flatten(-2)
-        # output = self.fc_pna(output)
 
         x_shortcut = x
-        # x = torch.cat([x, output], -1)
-        # entity_indexs = einops.repeat(torch.arange(graph.num_nodes).to(self.device), 'v -> b v', b=batch_size)
-        # query_indexs = einops.repeat(r_index, 'b -> b v', v=graph.num_nodes)
-        # encoded = einops.rearrange(query_indexs * graph.num_nodes + entity_indexs, 'b v -> (b v)')
-        # i_edge_encoded = edge_index[:, 1] * graph.num_nodes + edge_index[:, 2]
-        # o_edge_encoded = edge_index[:, 1] * graph.num_nodes + edge_index[:, 0]
-        # readout_mask_i = einops.rearrange(torch.isin(encoded, i_edge_encoded), '(b v d) -> b v d', b=batch_size, d=1)
-        # readout_mask_o = einops.rearrange(torch.isin(encoded, o_edge_encoded), '(b v d) -> b v d', b=batch_size, d=1)
-        # readout = self.fc_readout_i(torch.sum(x * readout_mask_i, dim=1, keepdim=True)) + self.fc_readout_o(torch.sum(x * readout_mask_o, dim=1, keepdim=True))
-        x = self.fc_out(output + self.beta * x) #+ readout
+        x = self.fc_out(output + self.beta * x) 
         x = self.norm(x)
         x = x + x_shortcut
         return x
@@ -196,9 +147,7 @@ class KnowformerLayer(nn.Module):
         # define some functions
         split = lambda t: einops.rearrange(t, 'b l (h d) -> b h l d', h=self.num_heads) 
         merge = lambda t: einops.rearrange(t, 'b h l d -> b l (h d)')
-        norm1 = lambda t: F.normalize(t, dim=-1) # t / t.norm(dim=-1, p=2, keepdim=True)
-        norm2 = lambda t: (t**3) / (t**3).norm(dim=-1, p=2, keepdim=True).clamp_min(1e-5)
-        norm = lambda t: norm2(F.relu(norm1(t)))
+        norm = lambda t: F.normalize(t, dim=-1)
         
         batch_size = q.size(0)
         num_node = q.size(1)
@@ -211,9 +160,7 @@ class KnowformerLayer(nn.Module):
                
         # return output
         q, k, v = map(split, [q, k, v])
-        # q, k = map(F.relu, [q, k])
-        q, k = map(norm1, [q, k])
-        # q, k = map(norm2, [q, k])
+        q, k = map(norm, [q, k])
 
         # numerator
         # reduce memory complexity to O(|V|d)
@@ -224,7 +171,6 @@ class KnowformerLayer(nn.Module):
         full_rank_term = einops.repeat(full_rank_term, 'd D -> b h d D', b=batch_size, h=self.num_heads)
         kvs = einops.einsum(k, v, 'b h v d, b h v D -> b h d D') # torch.cat([einops.einsum(k, v, 'b h v d, b h v D -> b h d D'), full_rank_term], dim=-1)
         numerator =  einops.einsum(q, kvs, 'b h v d, b h d D -> b h v D') # self.fc_attn(einops.einsum(q, kvs, 'b h v d, b h d D -> b h v D'))
-        # einops.reduce(v, 'b h (v w) d -> b h w d', 'sum', w=1)*V + \
         numerator = numerator + einops.reduce(v, 'b h (v w) d -> b h w d', 'sum', w=1) + v*num_node
                     
         # denominator
@@ -232,24 +178,11 @@ class KnowformerLayer(nn.Module):
         denominator = einops.einsum(q, einops.reduce(k, 'b h v d -> b h d', 'sum'), 'b h v d, b h d -> b h v')
         denominator = denominator + torch.full(denominator.shape, fill_value=num_node).to(self.device) + num_node
         denominator = einops.rearrange(denominator, 'b h (v w) -> b h v w', w=1)
-        # denominator = torch.full(k.shape[:-1] + (1,), fill_value=2*num_node).to(self.device)
 
         output = numerator / denominator
         output = merge(output)
         
-        if return_attn:
-            batch_index, src, tgt = prototype_index.unbind(-1)
-            selected_q = q[batch_index, :, src]
-            selected_k = k[batch_index, :, tgt]
-            
-            selected_numerator = 1 + einops.einsum(selected_q, selected_k, 'n h d, n h d -> n h')
-            selected_denominator = denominator[batch_index, :, src].squeeze(-1)
-            selected_attn = selected_numerator / selected_denominator
-            # numerator = 1 + einops.einsum(q, k, 'b h v d, b h V d -> b h v V')
-            # selected_attn = numerator / denominator
-            return output, selected_attn
-        else:
-            return output
+        return output
         
     def forward(self, h_index, r_index, x, z, rev_z, graph, graph_mask, return_attn=False, prototype_index=None):
         batch_size = x.size(0)
@@ -267,23 +200,14 @@ class KnowformerLayer(nn.Module):
             v_x = layer(v_x, z, r_index, graph, graph_mask)
 
         q, k = self.fc_to_qk(qk_x).chunk(2, dim=-1)
-        v = v_x # self.fc_to_v(v_x)
+        v = v_x 
         
         
-        # norm = degree(graph.edge_index[:, 2], num_nodes=graph.num_nodes).float()
-        if return_attn:
-            x_attn, attn = self.attn(q, k, v, return_attn=True, prototype_index=prototype_index)
-            x = x + x_attn
-            x = self.attn_norm(x)
-            x = x + self.ffn(x)
-            x = self.norm(x)
-            return x, attn
-        else:
-            x = x + self.attn(q, k, v) 
-            x = self.attn_norm(x)
-            x = x + self.ffn(x)
-            x = self.norm(x)
-            return x
+        x = x + self.attn(q, k, v) 
+        x = self.attn_norm(x)
+        x = x + self.ffn(x)
+        x = self.norm(x)
+        return x
     
     
 class Knowformer(nn.Module):
@@ -313,12 +237,11 @@ class Knowformer(nn.Module):
     def device(self):
         return self.dummy_param.device
     
-    def forward(self, bacthed_data, return_attn=False):
-        h_index, r_index, graph, graph_mask, prototype_index = (bacthed_data['h_index'], 
-                                                                bacthed_data['r_index'], 
-                                                                bacthed_data['graph'], 
-                                                                bacthed_data.get('graph_mask', None),
-                                                                bacthed_data.get('prototype_index', None))
+    def forward(self, bacthed_data):
+        h_index, r_index, graph, graph_mask = (bacthed_data['h_index'], 
+                                               bacthed_data['r_index'], 
+                                               bacthed_data['graph'], 
+                                               bacthed_data.get('graph_mask', None))
         
         batch_size = h_index.size(0)
         
@@ -329,24 +252,13 @@ class Knowformer(nn.Module):
         
         index = einops.repeat(h_index, 'b -> b v d', v=1, d=self.hidden_dim)
         x = torch.zeros((batch_size, graph.num_nodes, self.hidden_dim), device=self.device)
-        # x = x.scatter_add_(1, index, torch.ones_like(z).unsqueeze(1))
         
-        attns = list()
-        x_cache = list([x])
         for layer in self.layers:
-            if return_attn:
-                x, attn = layer(h_index, r_index, x, z, rev_z, graph, graph_mask, return_attn=True, prototype_index=prototype_index)
-                attns.append(attn)
-            else:
-                x = layer(h_index, r_index, x, z, rev_z, graph, graph_mask)
-            # x = x + x_cache[-1]
+            x = layer(h_index, r_index, x, z, rev_z, graph, graph_mask)
 
         score = self.mlp_out(x).squeeze(-1)
         
-        if return_attn:
-            return score, attns
-        else:
-            return score
+        return score
     
 
 def create_projection_matrix(m, d, seed=0, scaling=0, struct_mode=False):

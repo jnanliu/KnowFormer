@@ -149,7 +149,6 @@ class KnowformerLightningModule(pl.LightningModule):
         loss = self.compute_loss(score, batched_data)
         
         self.log('memory', torch.cuda.max_memory_allocated()/(1024**3), prog_bar=True)
-        # self.log('attn-loss', attn_loss, prog_bar=True)
 
         return loss
 

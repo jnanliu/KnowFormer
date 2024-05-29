@@ -21,7 +21,7 @@ pip install einops==0.7.0
 
 ### Usage
 You can use the following commands to run KnowFormer. Please modify the argument `devices` based on your device.
-<details>
+<details open>
 <summary>FB15k-237</summary>
 
 ```bash
@@ -52,7 +52,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>WN18RR</summary>
 
 ```bash
@@ -80,7 +80,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>NELL995</summary>
 
 ```bash
@@ -108,7 +108,7 @@ python main.py --seed 42 \
                --weight_decay 1e-4
 
 ```
-</details>
+</details open>
 
 <details>
 <summary>YAGO3-10</summary>
@@ -140,7 +140,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>FB15k-237v1</summary>
 
 ```bash
@@ -170,7 +170,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>FB15k-237v2</summary>
 
 ```bash
@@ -200,7 +200,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>FB15k-237v3</summary>
 
 ```bash
@@ -230,7 +230,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>FB15k-237v4</summary>
 
 ```bash
@@ -260,7 +260,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>WN18RRv1</summary>
 
 ```bash
@@ -288,7 +288,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>WN18RRv2</summary>
 
 ```bash
@@ -318,7 +318,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>WN18RRv3</summary>
 
 ```bash
@@ -348,7 +348,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>WN18RRv4</summary>
 
 ```bash
@@ -378,7 +378,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>NELL995v1</summary>
 
 ```bash
@@ -408,7 +408,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>NELL995v2</summary>
 
 ```bash
@@ -436,7 +436,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>NELL995v3</summary>
 
 ```bash
@@ -466,7 +466,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details>
+<details open>
 <summary>NELL995v4</summary>
 
 ```bash
