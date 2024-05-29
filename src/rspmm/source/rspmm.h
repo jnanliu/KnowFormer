@@ -3,7 +3,8 @@
 #include <tuple>
 
 #include <torch/extension.h>
-#include <ATen/SparseTensorUtils.h>
+//#include <ATen/SparseTensorUtils.h>
+#include <ATen/native/SparseTensorUtils.h>
 
 namespace at {
 
