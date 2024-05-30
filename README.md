@@ -278,12 +278,14 @@ python main.py --seed 42 \
                --num_layer 3 \
                --num_qk_layer 2 \
                --num_v_layer 3 \
-               --hidden_dim 128 \
+               --hidden_dim 32 \
                --num_heads 4 \
-               --loss_fn ce \
+               --loss_fn bce \
+               --adversarial_temperature 0.5  \
+               --num_negative_sample 8 \
                --learning_rate 5e-3 \
                --optimizer Adam \
-               --weight_decay 1e-5
+               --weight_decay 1e-4
 
 ```
 </details>
@@ -306,11 +308,11 @@ python main.py --seed 42 \
                --num_layer 3 \
                --num_qk_layer 2 \
                --num_v_layer 3 \
-               --hidden_dim 128 \
+               --hidden_dim 32 \
                --num_heads 4 \
                --loss_fn bce \
-               --adversarial_temperature 1.0  \
-               --num_negative_sample 16 \
+               --adversarial_temperature 0.5  \
+               --num_negative_sample 8 \
                --learning_rate 5e-3 \
                --optimizer Adam \
                --weight_decay 1e-4
@@ -336,11 +338,9 @@ python main.py --seed 42 \
                --num_layer 3 \
                --num_qk_layer 2 \
                --num_v_layer 3 \
-               --hidden_dim 128 \
+               --hidden_dim 32 \
                --num_heads 4 \
-               --loss_fn bce \
-               --adversarial_temperature 1.0  \
-               --num_negative_sample 16 \
+               --loss_fn ce \
                --learning_rate 5e-3 \
                --optimizer Adam \
                --weight_decay 1e-4
@@ -366,11 +366,9 @@ python main.py --seed 42 \
                --num_layer 3 \
                --num_qk_layer 2 \
                --num_v_layer 3 \
-               --hidden_dim 128 \
+               --hidden_dim 32 \
                --num_heads 4 \
-               --loss_fn bce \
-               --adversarial_temperature 1.0  \
-               --num_negative_sample 16 \
+               --loss_fn ce \
                --learning_rate 5e-3 \
                --optimizer Adam \
                --weight_decay 1e-4
