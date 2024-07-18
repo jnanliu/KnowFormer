@@ -21,7 +21,7 @@ pip install einops==0.7.0
 
 ### Usage
 You can use the following commands to run KnowFormer. Please modify the argument `devices` based on your device.
-<details open>
+<details>
 <summary>FB15k-237</summary>
 
 ```bash
@@ -52,7 +52,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>WN18RR</summary>
 
 ```bash
@@ -80,7 +80,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>NELL995</summary>
 
 ```bash
@@ -108,7 +108,7 @@ python main.py --seed 42 \
                --weight_decay 1e-4
 
 ```
-</details open>
+</details>
 
 <details>
 <summary>YAGO3-10</summary>
@@ -140,7 +140,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>FB15k-237v1</summary>
 
 ```bash
@@ -170,7 +170,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>FB15k-237v2</summary>
 
 ```bash
@@ -200,7 +200,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>FB15k-237v3</summary>
 
 ```bash
@@ -230,7 +230,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>FB15k-237v4</summary>
 
 ```bash
@@ -260,7 +260,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>WN18RRv1</summary>
 
 ```bash
@@ -290,7 +290,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>WN18RRv2</summary>
 
 ```bash
@@ -320,7 +320,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>WN18RRv3</summary>
 
 ```bash
@@ -348,7 +348,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>WN18RRv4</summary>
 
 ```bash
@@ -376,7 +376,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>NELL995v1</summary>
 
 ```bash
@@ -406,7 +406,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>NELL995v2</summary>
 
 ```bash
@@ -434,7 +434,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>NELL995v3</summary>
 
 ```bash
@@ -464,7 +464,7 @@ python main.py --seed 42 \
 ```
 </details>
 
-<details open>
+<details>
 <summary>NELL995v4</summary>
 
 ```bash
@@ -500,10 +500,10 @@ Our implementation is partially based on Project [NBFNet](https://github.com/Kid
 ## 🌟 Citation
 If you used our work or found it helpful, please kindly cite our paper:
 ```
-@inproceedings{liu2024know,
-    title       = {KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning},
-    author      = {Junnan Liu and Qianren Mao and Weifeng Jiang and Jianxin Li},
-    booktitle   = {The Forty-first International Conference on Machine Learning},
-    year        = {2024}
+@inproceedings{liu2024knowformer,
+  title={KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning},
+  author={Junnan Liu and Qianren Mao and Weifeng Jiang and Jianxin Li},
+  booktitle={Forty-first International Conference on Machine Learning},
+  year={2024}
 }
 ```
