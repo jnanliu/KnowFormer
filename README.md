@@ -1,9 +1,14 @@
 # KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning
 
 ## 📋 Introduction
-This is the implementation for the ICML 2024 Conference paper _KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning_.
+This is the implementation for the ICML 2024 Conference paper 
+
+_[KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning](https://openreview.net/pdf?id=EncFNR3hxM)_.
 
 _Junnan Liu_, _Qianren Mao_\*, _Weifeng Jiang_, _Jianxin Li_
+
+### Abstract
+Knowledge graph reasoning plays a vital role in various applications and has garnered considerable attention. Recently, path-based methods have achieved impressive performance. However, they may face limitations stemming from constraints in message-passing neural networks, such as missing paths and information over-squashing. In this paper, we revisit the application of transformers for knowledge graph reasoning to address the constraints faced by path-based methods and propose a novel method KnowFormer. KnowFormer utilizes a transformer architecture to perform reasoning on knowledge graphs from the message-passing perspective, rather than reasoning by textual information like previous pretrained language model based methods. Specifically, we define the attention computation based on the query prototype of knowledge graph reasoning, facilitating convenient construction and efficient optimization. To incorporate structural information into the self-attention mechanism, we introduce structure-aware modules to calculate query, key, and value respectively. Additionally, we present an efficient attention computation method for better scalability. Experimental results demonstrate the superior performance of KnowFormer compared to prominent baseline methods on both transductive and inductive benchmarks.
 
 ## 🚀 Getting Started
 
@@ -504,6 +509,7 @@ If you used our work or found it helpful, please kindly cite our paper:
   title={KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning},
   author={Junnan Liu and Qianren Mao and Weifeng Jiang and Jianxin Li},
   booktitle={Forty-first International Conference on Machine Learning},
-  year={2024}
+  year={2024},
+  url={https://openreview.net/forum?id=EncFNR3hxM}
 }
 ```
