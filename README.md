@@ -26,7 +26,7 @@ pip install einops==0.7.0
 
 ### Usage
 You can use the following commands to run KnowFormer. Please modify the argument `devices` based on your device.
-<details>
+<details open>
 <summary>FB15k-237</summary>
 
 ```bash
@@ -34,7 +34,7 @@ python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devic
 ```
 </details>
 
-<details>
+<details open>
 <summary>WN18RR</summary>
 
 ```bash
@@ -42,13 +42,13 @@ python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devic
 ```
 </details>
 
-<details>
+<details open>
 <summary>NELL995</summary>
 
 ```bash
 python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devices 4 --max_epochs 20 --checkpoint_save_path ./experiments/train/nell-995/ --data_path ./data/nell-995 --batch_size 16 --test_batch_size 16 --num_workers 8 --num_layer 3 --num_qk_layer 2 --num_v_layer 3 --hidden_dim 32 --num_heads 4 --loss_fn bce --adversarial_temperature 0.5 --num_negative_sample 16 --learning_rate 5e-3 --optimizer Adam --weight_decay 1e-4
 ```
-</details>
+</details open>
 
 <details>
 <summary>YAGO3-10</summary>
@@ -418,11 +418,14 @@ Our implementation is partially based on Project [NBFNet](https://github.com/Kid
 ## 🌟 Citation
 If you used our work or found it helpful, please kindly cite our paper:
 ```
-@inproceedings{liu2024knowformer,
-  title={KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning},
-  author={Junnan Liu and Qianren Mao and Weifeng Jiang and Jianxin Li},
-  booktitle={Forty-first International Conference on Machine Learning},
-  year={2024},
-  url={https://openreview.net/forum?id=EncFNR3hxM}
+@inproceedings{LiuMJ024,
+  author       = {Junnan Liu and
+                  Qianren Mao and
+                  Weifeng Jiang and
+                  Jianxin Li},
+  title        = {KnowFormer: Revisiting Transformers for Knowledge Graph Reasoning},
+  booktitle    = {{ICML}},
+  publisher    = {OpenReview.net},
+  year         = {2024}
 }
 ```
