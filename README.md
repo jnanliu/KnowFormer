@@ -30,30 +30,7 @@ You can use the following commands to run KnowFormer. Please modify the argument
 <summary>FB15k-237</summary>
 
 ```bash
-python main.py --seed 42 \
-               --accelerator gpu \ 
-               --strategy ddp 
-               --precision 32 \
-               --devices 4 \
-               --max_epochs 20 \ 
-               --checkpoint_save_path ./experiments/fb15k-237/ \
-               --data_path ./data/fb15k-237 \ 
-               --batch_size 96 \
-               --test_batch_size 96 \
-               --num_workers 8 \
-               --num_layer 3 \
-               --num_qk_layer 2 \
-               --num_v_layer 3 \
-               --hidden_dim 32 \
-               --num_heads 4 \
-               --loss_fn bce \
-               --adversarial_temperature 0.5 \
-               --remove_all \
-               --num_negative_sample 8 \
-               --learning_rate 5e-3 \
-               --optimizer Adam \
-               --weight_decay 1e-4
-
+python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devices 4 --max_epochs 20 --checkpoint_save_path ./experiments/fb15k-237/ --data_path ./data/fb15k-237 --batch_size 96 --test_batch_size 96 --num_workers 8 --num_layer 3 --num_qk_layer 2 --num_v_layer 3 --hidden_dim 32 --num_heads 4 --loss_fn bce --adversarial_temperature 0.5 --remove_all --num_negative_sample 8 --learning_rate 5e-3 --optimizer Adam --weight_decay 1e-4
 ```
 </details>
 
@@ -61,27 +38,7 @@ python main.py --seed 42 \
 <summary>WN18RR</summary>
 
 ```bash
-python main.py --seed 42 \
-               --accelerator gpu \
-               --strategy ddp \
-               --precision 32 \
-               --devices 4 \
-               --max_epochs 20  \
-               --checkpoint_save_path ./experiments/train/wn18rr/ \
-               --data_path ./data/wn18rr \
-               --batch_size 32 \
-               --test_batch_size 32 \
-               --num_workers 8 \
-               --num_layer 3 \
-               --num_qk_layer 2 \
-               --num_v_layer 3 \
-               --hidden_dim 32 \
-               --num_heads 4 \
-               --loss_fn ce \
-               --learning_rate 5e-3 \ 
-               --optimizer Adam \
-               --weight_decay 1e-4
-
+python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devices 4 --max_epochs 20 --checkpoint_save_path ./experiments/train/wn18rr/ --data_path ./data/wn18rr --batch_size 32 --test_batch_size 32 --num_workers 8 --num_layer 3 --num_qk_layer 2 --num_v_layer 3 --hidden_dim 32 --num_heads 4 --loss_fn ce --learning_rate 5e-3 --optimizer Adam --weight_decay 1e-4
 ```
 </details>
 
@@ -89,29 +46,7 @@ python main.py --seed 42 \
 <summary>NELL995</summary>
 
 ```bash
-python main.py --seed 42 \
-               --accelerator gpu \
-               --strategy ddp \
-               --precision 32 \
-               --devices 4 \
-               --max_epochs 20 \
-               --checkpoint_save_path ./experiments/train/nell-995/ \
-               --data_path ./data/nell-995 \
-               --batch_size 16 \
-               --test_batch_size 16 \
-               --num_workers 8 \
-               --num_layer 3 \
-               --num_qk_layer 2 \
-               --num_v_layer 3 \
-               --hidden_dim 32 \
-               --num_heads 4 \
-               --loss_fn bce \
-               --adversarial_temperature 0.5 \
-               --num_negative_sample 16 \
-               --learning_rate 5e-3 \
-               --optimizer Adam \
-               --weight_decay 1e-4
-
+python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devices 4 --max_epochs 20 --checkpoint_save_path ./experiments/train/nell-995/ --data_path ./data/nell-995 --batch_size 16 --test_batch_size 16 --num_workers 8 --num_layer 3 --num_qk_layer 2 --num_v_layer 3 --hidden_dim 32 --num_heads 4 --loss_fn bce --adversarial_temperature 0.5 --num_negative_sample 16 --learning_rate 5e-3 --optimizer Adam --weight_decay 1e-4
 ```
 </details>
 
@@ -119,29 +54,7 @@ python main.py --seed 42 \
 <summary>YAGO3-10</summary>
 
 ```bash
-python main.py --seed 42 \
-               --accelerator gpu \
-               --strategy ddp \
-               --precision 32 \
-               --devices 4 \
-               --max_epochs 2 \
-                --checkpoint_save_path ./experiments/train/yago3-10/ \
-               --data_path ./data/yago3-10 \
-               --batch_size 12 \
-               --test_batch_size 12 \
-               --num_workers 8 \
-               --num_layer 3 \
-               --num_qk_layer 2 \
-               --num_v_layer 3 \
-               --hidden_dim 32 \
-               --num_heads 4 \
-               --loss_fn bce \
-               --adversarial_temperature 1.0 \
-               --num_negative_sample 16 \
-               --learning_rate 5e-3 \
-               --optimizer Adam \
-               --weight_decay 1e-4
-
+python main.py --seed 42 --accelerator gpu --strategy ddp --precision 32 --devices 4 --max_epochs 2 --checkpoint_save_path ./experiments/train/yago3-10/ --data_path ./data/yago3-10 --batch_size 12 --test_batch_size 12 --num_workers 8 --num_layer 3 --num_qk_layer 2 --num_v_layer 3 --hidden_dim 32 --num_heads 4 --loss_fn bce --adversarial_temperature 1.0 --num_negative_sample 16 --learning_rate 5e-3 --optimizer Adam --weight_decay 1e-4
 ```
 </details>
 
